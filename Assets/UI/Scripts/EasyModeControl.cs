@@ -17,7 +17,7 @@ public class EasyModeControl : MonoBehaviour {
 		Application.LoadLevel (Application.loadedLevel);
 	}
 	public void ExitAnyWay(){
-		Application.LoadLevel(1);
+		Application.LoadLevel(0);
 	}
 	public void Resume(){
 		ExitWindow.enabled = false;

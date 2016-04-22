@@ -20,16 +20,16 @@ public class MenuControl : MonoBehaviour {
 		LevelMenu.enabled = false;
 	}
 	public void PlayMode(){
-		Application.LoadLevel (0);
+		Application.LoadLevel (1);
 	}
 	public void EasyMode(){
-		Application.LoadLevel (0);
+		Application.LoadLevel (1);
 	}
 	public void HardMode(){
-		Application.LoadLevel (0);
+		Application.LoadLevel (1);
 	}
 	public void BuildMode(){
-		Application.LoadLevel (0);
+		Application.LoadLevel (1);
 	}
 	/*public void ExitPress(){
 		mainMenu.enabled = false;
