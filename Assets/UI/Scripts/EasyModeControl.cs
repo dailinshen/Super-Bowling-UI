@@ -8,6 +8,8 @@ public class EasyModeControl : MonoBehaviour {
 	private GUIStyle guistyle=new GUIStyle();
 	private Text counterText;
 	private float seconds, minutes;
+	public GameObject Player;
+	public Vector3 StartPosition;
 
 	public void Exit(){
 		ExitWindow.enabled = true;
@@ -15,6 +17,7 @@ public class EasyModeControl : MonoBehaviour {
 	}
 	public void Restart(){
 		Application.LoadLevel (Application.loadedLevel);
+		Player.transform.localPosition = StartPosition;
 	}
 	public void ExitAnyWay(){
 		Application.LoadLevel(0);
@@ -29,6 +32,9 @@ public class EasyModeControl : MonoBehaviour {
 		ExitWindow.enabled = false;
 		exitpressed = false;
 		counterText = GetComponent<Text> () as Text;
+		Player = GameObject.Find ("Player");
+		StartPosition = Player.transform.localPosition;
+
 	}
 	void OnGUI(){
 		minutes = (int)(Time.timeSinceLevelLoad / 60f);
