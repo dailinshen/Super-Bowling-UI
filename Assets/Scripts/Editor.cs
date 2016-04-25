@@ -14,6 +14,7 @@ public class Editor : MonoBehaviour {
 
     public GameObject ARCam;
     public GameObject mainWorkspace;
+    public GameObject mainImage;
 
     public Button selectButton;
     public Button createButton;
@@ -121,6 +122,19 @@ public class Editor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        Vector3 camToImageDir = mainImage.transform.position + ARCam.transform.position;
+        camToImageDir.x += 26.8f;
+        Debug.Log(camToImageDir.x);
+        if (camToImageDir.x > 0.5 && camToImageDir.x < 1.0)
+        {
+            mainWorkspace.transform.Translate(camToImageDir.x / 100.0f, 0.0f, 0.0f);
+        }
+        else if (camToImageDir.x < -0.5 && camToImageDir.x > -1.0)
+        {
+            mainWorkspace.transform.Translate(camToImageDir.x / 100.0f, 0.0f, 0.0f);
+        }
+
+
         if (touchedAnObject())
         {
             Ray ray;
@@ -130,7 +144,8 @@ public class Editor : MonoBehaviour {
             else
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit)) {
+            if (Physics.Raycast(ray, out hit))
+            {
                 Debug.Log(hit.transform.name);
             }
             if (Physics.Raycast(ray, out hit) && FindParentWithTag(hit.transform.gameObject, "Obstacle") != null
@@ -142,7 +157,7 @@ public class Editor : MonoBehaviour {
                 title.text = "Confirm the object to select it (" + hit.transform.gameObject + " selected)";
                 confirmButton.gameObject.SetActive(true);
             }
-            else if (Physics.Raycast(ray, out hit) && FindParentWithTag(hit.transform.gameObject, "Obstacle") != null 
+            else if (Physics.Raycast(ray, out hit) && FindParentWithTag(hit.transform.gameObject, "Obstacle") != null
                 && FindParentWithName(hit.transform.gameObject, "ObjectChooser") != null && toolMode == 2)
             {
                 GameObject obj;
@@ -150,10 +165,11 @@ public class Editor : MonoBehaviour {
                 obj = (GameObject)Instantiate(obstacle, mainWorkspace.transform.position, Quaternion.identity);
                 obj.name = obstacle.name + objectNumber;
 
-                obj.transform.localScale = new Vector3(1, 1, 1);
-                obj.transform.position = mainWorkspace.transform.position + new Vector3(0, 3.0f, 0);
+                obj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                 obj.transform.parent = mainWorkspace.transform;
-                
+
+                obj.transform.position = ARCam.transform.position + new Vector3(0, 0, 1.7f);
+
                 objectNumber++;
                 Debug.Log(obj);
                 objects.Add(obj);
