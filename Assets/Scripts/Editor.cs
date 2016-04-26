@@ -124,7 +124,7 @@ public class Editor : MonoBehaviour {
 
         Vector3 camToImageDir = mainImage.transform.position + ARCam.transform.position;
         camToImageDir.x += 26.8f;
-        Debug.Log(camToImageDir.x);
+        //Debug.Log(camToImageDir.x);
         if (camToImageDir.x > 0.5 && camToImageDir.x < 1.0)
         {
             mainWorkspace.transform.Translate(camToImageDir.x / 100.0f, 0.0f, 0.0f);
@@ -273,7 +273,7 @@ public class Editor : MonoBehaviour {
 
     void deSelect()
     {
-        if (selectedObject != null)
+        if (selectedObject != null && selectedMats != null)
         {
             revertObject(selectedObject, selectedMats);
             selectedObject = null;
@@ -284,15 +284,23 @@ public class Editor : MonoBehaviour {
     Material[] saveMats(GameObject p)
     {
         Transform[] c = p.GetComponentsInChildren<Transform>();
-        Material[] m = new Material[c.Length];
+        int s = 0;
+        foreach (Transform child in c)
+        {
+            if (child.GetComponent<Renderer>() != null)
+            {
+                s = s + 1;
+            }
+        }
+        Material[] m = new Material[s];
         int i = 0;
         foreach (Transform child in c)
         {
             if (child.GetComponent<Renderer>() != null)
             {
                 m[i] = child.GetComponent<Renderer>().material;
+                i = i + 1;
             }
-            i = i + 1;
         }
         return m;
     }
@@ -305,9 +313,11 @@ public class Editor : MonoBehaviour {
         {
             if (child.GetComponent<Renderer>() != null)
             {
+                Debug.Log(m[i]);
                 child.GetComponent<Renderer>().material = m[i];
+                i = i + 1;
             }
-            i = i + 1;
+
         }
     }
 

@@ -76,7 +76,7 @@ public class Mover : MonoBehaviour {
         {
             dir = 1;
         }
-        block.transform.Translate(new Vector3(dir*speed*0.005f, 0.0f, 0.0f));
+        block.transform.Translate(new Vector3(dir*speed*0.0005f, 0.0f, 0.0f));
 	}
 
     public void showUI()
