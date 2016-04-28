@@ -10,7 +10,7 @@ public class PlayerCollisionControl : MonoBehaviour {
 	void Start () {
 		count = 0;
 		rb = GetComponent<Rigidbody> ();
-		scoreText = "Score" + count.ToString ();
+		scoreText.text = "Score" + count.ToString ();
 	}
 	
 	// Update is called once per frame
@@ -21,7 +21,7 @@ public class PlayerCollisionControl : MonoBehaviour {
 		if (other.gameObject.CompareTag ("BowlingPins")) {
 			other.gameObject.SetActive (false);
 			count += 10;
-			scoreText = "Score" + count.ToString ();
+			scoreText.text = "Score" + count.ToString ();
 		}
 	}
 }
