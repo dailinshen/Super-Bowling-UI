@@ -68,7 +68,7 @@ public class Pathmove : MonoBehaviour {
 			lastCamx = Cam.transform.rotation.x;
 			lastCamy = Cam.transform.rotation.y;
 
-			if (Player.transform.localPosition.y < -1) {
+			if (Player.transform.localPosition.y < -1 ||transform.localPosition.x>14.2) {
 				playflag = false;
 			}
 
