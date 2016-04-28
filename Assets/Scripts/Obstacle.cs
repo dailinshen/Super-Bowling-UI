@@ -15,7 +15,7 @@ public class Obstacle : MonoBehaviour {
 
 
 	void OnTriggerEnter(Collider other){
-		Vector3 backoff = Workspace.transform.localPosition + new Vector3(-2f,0f,0f);
+		Vector3 backoff = Workspace.transform.localPosition + new Vector3(-0.5f,0f,0f);
 		Workspace.transform.localPosition = backoff;
 		
 	}

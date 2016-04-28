@@ -8,7 +8,7 @@ public class vbjump : MonoBehaviour, IVirtualButtonEventHandler{
 	public Rigidbody player;
 	public GameObject Workspace;
 	private float timer =0.0f;
-	private bool isTimerValid=false;
+	private bool jumpflag=false;
 	void Start(){
 		VirtualButtonBehaviour[] vbs = transform.GetComponentsInChildren<VirtualButtonBehaviour> ();
 		foreach (VirtualButtonBehaviour item in vbs)
@@ -22,12 +22,12 @@ public class vbjump : MonoBehaviour, IVirtualButtonEventHandler{
 	}
 
 	public void Update(){
-		if (isTimerValid)
-		{
-			player.AddRelativeForce (new Vector3 (0f, 3f, 0f));
-			if (Player.transform.localPosition.y > 0.2&& Workspace.transform.localPosition.x > 0.1) {
-				isTimerValid = false;
+		if (jumpflag==true)
+		{	
+			if (Player.transform.localPosition.y > 0.2) {
+				jumpflag = false;
 			}
+				player.AddRelativeForce (new Vector3 (0f, 2f, 0f));
 		}
 
 	}
@@ -35,8 +35,8 @@ public class vbjump : MonoBehaviour, IVirtualButtonEventHandler{
 
 	public void OnButtonPressed (VirtualButtonAbstractBehaviour vb)
 	{
-		if (Player.transform.localPosition.y < 0.2 && Workspace.transform.localPosition.x > 0.1) {
-			isTimerValid = true;
+		if (Player.transform.localPosition.y < 0.2 && Workspace.transform.localPosition.x > 0.05) {
+			jumpflag = true;
 		}
 	}
 

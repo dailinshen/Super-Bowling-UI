@@ -56,11 +56,11 @@ public class Pathmove : MonoBehaviour {
 		}
 
 		if (Cam.transform.position.x>-13.6 &&Cam.transform.position.x<-13.2) {
-			if (Workspace.transform.localPosition.x > 0.2) {
+			if (transform.localPosition.x > 0.1) {
 				player.AddRelativeForce (new Vector3 (0f, -1f, 0f));
 			}
 			test.text =test.text+ "got here";
-			speed =(1+(Cam.transform.rotation.x + 0.35f) * 15f);
+			speed =Mathf.Max((1+(Cam.transform.rotation.x + 0.35f) * 15f),0);
 			Vector3 move1 = transform.localPosition + new Vector3(0.1f,0f,0f) *(speed)*Time.deltaTime ;
 			transform.localPosition = move1;
 			Vector3 move2 = Player.transform.localPosition + new Vector3 (0f, 0f, -0.05f) * Cam.transform.rotation.y*2;
