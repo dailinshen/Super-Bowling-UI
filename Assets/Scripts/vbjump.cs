@@ -27,7 +27,9 @@ public class vbjump : MonoBehaviour, IVirtualButtonEventHandler{
 			if (Player.transform.localPosition.y > 0.2) {
 				jumpflag = false;
 			}
+			if (Player.transform.localPosition.y < 0.2) {
 				player.AddRelativeForce (new Vector3 (0f, 2f, 0f));
+			}
 		}
 
 	}
@@ -35,8 +37,10 @@ public class vbjump : MonoBehaviour, IVirtualButtonEventHandler{
 
 	public void OnButtonPressed (VirtualButtonAbstractBehaviour vb)
 	{
-		if (Player.transform.localPosition.y < 0.2 && Workspace.transform.localPosition.x > 0.05) {
+		if (Player.transform.localPosition.y < 0.2) {
 			jumpflag = true;
+		} else {
+			jumpflag = false;
 		}
 	}
 
