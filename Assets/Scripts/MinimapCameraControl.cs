@@ -13,7 +13,7 @@ public class MinimapCameraControl : MonoBehaviour {
 
 	void LateUpdate()
 	{
-		transform.position = new Vector3(Target.position.x, Target.position.y, transform.position.z);
+		transform.position = new Vector3(Target.position.x, Target.position.y+0.1f, transform.position.z+0.2f);
 		//transform.position = new Vector3 (Target.position.y, 10.0f, 10.0f);
 	}
 }

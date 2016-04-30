@@ -37,22 +37,7 @@ public class Pathmove : MonoBehaviour {
 		Debug.Log (Cam.transform.position.x);
 		// Debug.Log (pathImageTarget.transform.position);
 		test.text = "";
-		if (Cam.transform.position.x > -13.6 && Cam.transform.position.x < -13.2) {
-			test.text = "got here and playflag is:"+ playflag.ToString();
-		}
-		/*if (Player.transform.localPosition.y < 0.2) {
-			test.text = test.text + "got here";
-		}*/
-		test.text =test.text+ "             Cam rotation x:"+Cam.transform.rotation.x.ToString()+
-			"       Cam rotation y:"+Cam.transform.rotation.y.ToString()+
-			"       Cam rotation z:"+Cam.transform.rotation.z.ToString()+
-			"       Cam rotation w:"+Cam.transform.rotation.w.ToString();
-		test.text = test.text + "           Cam Position x:" + Cam.transform.position.x.ToString () +
-			"      Cam Position y:" + Cam.transform.position.y.ToString () +
-			"      Cam Position z:" + Cam.transform.position.z.ToString ();
-		test.text = test.text + "           player Position x:" + Player.transform.localPosition.x.ToString () +
-			"     player Position y:" + Player.transform.localPosition.y.ToString () +
-			"      player Position z:" + Player.transform.localPosition.z.ToString ();
+
 		if (!playflag) {
 			EasyModeControl link = Cam.GetComponent<EasyModeControl> ();
 			link.Exit();
@@ -62,10 +47,10 @@ public class Pathmove : MonoBehaviour {
 			if (transform.localPosition.x > 0.1) {
 				player.AddRelativeForce (new Vector3 (0f, -1f, 0f));
 			}
-			test.text =test.text+ "got here";
 			speed =Mathf.Max((1+(Cam.transform.rotation.x + 0.35f) * 15f),0);
 			Vector3 move1 = transform.localPosition + new Vector3(0.1f,0f,0f) *(speed)*Time.deltaTime ;
 			transform.localPosition = move1;
+			test.text =test.text+ "Action with speed:"+speed.ToString();
 			// Vector3 move2 = Player.transform.localPosition + new Vector3 (0f, 0f, -0.05f) * Cam.transform.rotation.y*2;
 			// Player.transform.localPosition = move2;
 			Vector3 move2 = new Vector3 (0f, 0f, -1f) * Cam.transform.rotation.y*2;
@@ -77,6 +62,22 @@ public class Pathmove : MonoBehaviour {
 				playflag = false;
 			}
 
+			if (Cam.transform.position.x > -13.6 && Cam.transform.position.x < -13.2) {
+				test.text = "got here and playflag is:"+ playflag.ToString();
+			}
+			/*if (Player.transform.localPosition.y < 0.2) {
+			test.text = test.text + "got here";
+		}*/
+			test.text =test.text+ "             Cam rotation x:"+Cam.transform.rotation.x.ToString()+
+				"       Cam rotation y:"+Cam.transform.rotation.y.ToString()+
+				// "       Cam rotation z:"+Cam.transform.rotation.z.ToString()+
+				"       Cam rotation w:"+Cam.transform.rotation.w.ToString();
+			test.text = test.text + "           Cam Position x:" + Cam.transform.position.x.ToString ();
+				//"      Cam Position y:" + Cam.transform.position.y.ToString () +
+				//"      Cam Position z:" + Cam.transform.position.z.ToString ();
+				test.text = test.text + "           player Position x:" + Player.transform.localPosition.x.ToString () +
+				"     player Position y:" + Player.transform.localPosition.y.ToString () +
+				"      player Position z:" + Player.transform.localPosition.z.ToString ();
 		}
 	}
 }

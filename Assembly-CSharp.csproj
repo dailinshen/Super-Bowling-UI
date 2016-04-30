@@ -49,6 +49,7 @@
      <Compile Include="Assets\Scripts\CustomTracker.cs" />
      <Compile Include="Assets\Scripts\Editor.cs" />
      <Compile Include="Assets\Scripts\MinimapCameraControl.cs" />
+     <Compile Include="Assets\Scripts\Minitop.cs" />
      <Compile Include="Assets\Scripts\Mover.cs" />
      <Compile Include="Assets\Scripts\Obstacle.cs" />
      <Compile Include="Assets\Scripts\Pathmove.cs" />
