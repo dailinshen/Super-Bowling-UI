@@ -54,6 +54,10 @@ public class Editor : MonoBehaviour {
     public int objectNumber = 0;
     private ArrayList objects = new ArrayList();
     private Vector3 originalScale;
+    private Transform originalTransform;
+    private Vector3 relWandPos;
+    private GameObject scalyObject;
+    private Color originalColor;
 
 	// Use this for initialization
 	void Start () {
@@ -122,17 +126,19 @@ public class Editor : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        Vector3 camToImageDir = mainImage.transform.position + ARCam.transform.position;
-        camToImageDir.x += 26.8f;
+        //Vector3 camToImageDir = mainImage.transform.position + ARCam.transform.position;
+        //camToImageDir.x += 26.8f;
         //Debug.Log(camToImageDir.x);
-        if (camToImageDir.x > 0.5 && camToImageDir.x < 1.0)
+        if (mainImage.transform.localRotation.z > 0.1)
         {
-            mainWorkspace.transform.Translate(camToImageDir.x / 100.0f, 0.0f, 0.0f);
+            mainWorkspace.transform.Translate(-0.01f, 0.0f, 0.0f);
         }
-        else if (camToImageDir.x < -0.5 && camToImageDir.x > -1.0)
+        else if (mainImage.transform.localRotation.z < -0.1)
         {
-            mainWorkspace.transform.Translate(camToImageDir.x / 100.0f, 0.0f, 0.0f);
+            mainWorkspace.transform.Translate(0.01f, 0.0f, 0.0f);
         }
+
+        //Debug.Log(mainImage.transform.localRotation.z);
 
 
         if (touchedAnObject())
@@ -168,7 +174,7 @@ public class Editor : MonoBehaviour {
                 obj.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
                 obj.transform.parent = mainWorkspace.transform;
 
-                obj.transform.position = ARCam.transform.position + new Vector3(0, 0, 1.7f);
+                obj.transform.position = ARCam.transform.position + ARCam.transform.forward*2;
 
                 objectNumber++;
                 Debug.Log(obj);
@@ -207,7 +213,7 @@ public class Editor : MonoBehaviour {
         {
             if (wandImage.GetComponent<CustomTracker>().tracking == true)
             {
-                float dist;
+                /*float dist;
 
                 dist = Vector3.Distance(selectedObject.transform.position, wandEnd.transform.position);
                 Vector3 direction = selectedObject.transform.position + wandEnd.transform.position;
@@ -223,7 +229,12 @@ public class Editor : MonoBehaviour {
                 else
                 {
                     selectedObject.transform.localScale = originalScale;
-                }
+                }*/
+
+                relWandPos = selectedObject.transform.InverseTransformPoint(wandEnd.transform.position);
+                Debug.Log(relWandPos);
+                
+                scalyObject.transform.localScale = new Vector3(Mathf.Abs(relWandPos.x) * 0.2f, Mathf.Abs(relWandPos.y) * 0.2f, Mathf.Abs(relWandPos.z) * 0.2f);
             }
 
         }
@@ -335,6 +346,18 @@ public class Editor : MonoBehaviour {
         }
     }
 
+    void toggleObjectVisibility(GameObject p)
+    {
+        Transform[] c = p.GetComponentsInChildren<Transform>();
+        foreach (Transform child in c)
+        {
+            if (child.GetComponent<MeshRenderer>() != null)
+            {
+                child.GetComponent<MeshRenderer>().enabled = !child.GetComponent<MeshRenderer>().enabled;
+            }
+        }
+    }
+
     public void backPressed(Button b)
     {
         if (toolMode == 1) // select
@@ -439,6 +462,11 @@ public class Editor : MonoBehaviour {
             backButton.gameObject.SetActive(true);
             confirmButton.gameObject.SetActive(false);
             transformMenu.SetActive(true);
+
+            toggleObjectVisibility(selectedObject);
+
+            selectedObject.transform.localScale = new Vector3(Mathf.Abs(relWandPos.x) * 0.2f, Mathf.Abs(relWandPos.y) * 0.2f, Mathf.Abs(relWandPos.z) * 0.2f);
+            Destroy(scalyObject);
         }
         else if (toolMode == 8) // options
         {
@@ -490,6 +518,7 @@ public class Editor : MonoBehaviour {
         backButton.gameObject.SetActive(false);
         confirmButton.gameObject.SetActive(true);
         selectedObject.transform.parent = ARCam.transform;
+        title.text = "Move the camera to translate";
     }
 
     public void rotatePressed(Button b)
@@ -499,6 +528,7 @@ public class Editor : MonoBehaviour {
         //confirmMenu.SetActive(true);
         backButton.gameObject.SetActive(false);
         confirmButton.gameObject.SetActive(true);
+        title.text = "Use the wand to rotate";
     }
 
     public void scalePressed(Button b)
@@ -508,7 +538,18 @@ public class Editor : MonoBehaviour {
         //confirmMenu.SetActive(true);
         backButton.gameObject.SetActive(false);
         confirmButton.gameObject.SetActive(true);
+
         originalScale = selectedObject.transform.localScale;
+        originalTransform = Instantiate(selectedObject.transform);
+
+        title.text = "Use the wand to scale";
+
+        scalyObject = (GameObject)Instantiate(selectedObject, selectedObject.transform.position, Quaternion.identity);
+        scalyObject.name = "copy";
+        scalyObject.transform.parent = mainWorkspace.transform;
+
+        toggleObjectVisibility(selectedObject);
+
     }
 
     public void optionsPressed(Button b)
@@ -520,5 +561,6 @@ public class Editor : MonoBehaviour {
         confirmButton.gameObject.SetActive(true);
 
         selectedObject.SendMessage("showUI");
+        title.text = "Object options";
     }
 }
