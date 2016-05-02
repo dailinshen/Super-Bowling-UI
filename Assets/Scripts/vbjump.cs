@@ -4,6 +4,11 @@ using Vuforia;
 
 public class vbjump : MonoBehaviour, IVirtualButtonEventHandler{
 
+	public AudioClip shootSound;
+	private AudioSource source;
+	private float volLowRange=5.5f;
+	private float volHighRange=10.0f;
+
 	public GameObject Player;
 	public Rigidbody player;
 	public GameObject Workspace;
@@ -39,6 +44,10 @@ public class vbjump : MonoBehaviour, IVirtualButtonEventHandler{
 	{
 		if (Player.transform.localPosition.y < 0.2) {
 			jumpflag = true;
+
+			float vol = Random.Range (volLowRange, volHighRange);
+			source.PlayOneShot (shootSound, vol);
+
 		} else {
 			jumpflag = false;
 		}

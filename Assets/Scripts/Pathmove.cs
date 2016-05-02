@@ -11,7 +11,7 @@ public class Pathmove : MonoBehaviour {
 	private float speed;
 	private float lastCamy;
 	private float lastCamx;
-	private bool  playflag;
+	public bool  playflag;
 	public Text test;
 
 	// Use this for initialization
@@ -39,8 +39,19 @@ public class Pathmove : MonoBehaviour {
 		test.text = "";
 
 		if (!playflag) {
-			EasyModeControl link = Cam.GetComponent<EasyModeControl> ();
-			link.Exit();
+			int x;
+			x = Application.loadedLevel;
+			if (x == 1) {
+				EasyModeControl link = Cam.GetComponent<EasyModeControl> ();
+				link.Exit ();
+			} else if (x == 2) {
+				realEasyModeControl link_ = Cam.GetComponent<realEasyModeControl> ();
+				link_.Exit ();
+			} else if (x == 3) {
+				hardModeControl link__=Cam.GetComponent<hardModeControl> ();
+				link__.Exit();
+			}
+
 		}
 
 		if (Cam.transform.position.x>-13.6 &&Cam.transform.position.x<-13.2) {

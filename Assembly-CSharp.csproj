@@ -58,6 +58,8 @@
      <Compile Include="Assets\UI\Scripts\EasyModeControl.cs" />
      <Compile Include="Assets\UI\Scripts\MenuControl.cs" />
      <Compile Include="Assets\UI\Scripts\TimerScript.cs" />
+     <Compile Include="Assets\UI\Scripts\hardModeControl.cs" />
+     <Compile Include="Assets\UI\Scripts\realEasyModeControl.cs" />
      <Compile Include="Assets\Vuforia\Scripts\BackgroundPlaneBehaviour.cs" />
      <Compile Include="Assets\Vuforia\Scripts\CloudRecoBehaviour.cs" />
      <Compile Include="Assets\Vuforia\Scripts\CylinderTargetBehaviour.cs" />
