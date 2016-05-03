@@ -6,24 +6,25 @@ public class MenuControl : MonoBehaviour {
 	public Canvas MainMenu;
 	public Canvas LevelMenu;
 	public Canvas TopScoresMenu;
-
+	private static int xxx;
 	public Text TopScoreList;
 
 	// Use this for initialization
 	void Start () {
+		xxx = 0;
 		MainMenu = MainMenu.GetComponent<Canvas> ();
 		LevelMenu = LevelMenu.GetComponent<Canvas> ();
 		TopScoresMenu = TopScoresMenu.GetComponent<Canvas> ();
 		TopScoresMenu.enabled = false;
 		LevelMenu.enabled = false;
 		MainMenu.enabled = true;
+		TopScoreList.text = "Score: " + xxx.ToString();
 
 	}
 
 	public void LevelMode(){
 		LevelMenu.enabled = true;
-		int xxx = GameObject.Find ("Player").GetComponent<PlayerCollisionControl> ().overalscore;
-		TopScoreList.text = "Score: " + xxx.ToString();
+
 	}
 	public void TopScoresMode(){
 		TopScoresMenu.enabled = true;
@@ -33,7 +34,7 @@ public class MenuControl : MonoBehaviour {
 		TopScoresMenu.enabled = false;
 	}
 	public void PlayMode(){
-		Application.LoadLevel (1);
+		Application.LoadLevel (2);
 	}
 	public void EasyMode(){
 		Application.LoadLevel (2);
@@ -51,6 +52,11 @@ public class MenuControl : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-
+		int trs=PlayerCollisionControl.overalscore;
+		//trs = Mathf.Max (trs, xxx);
+		//xxx = trs;
+		//xxx=0;
+		//PlayerPrefs.GetInt("Player Score", )
+		TopScoreList.text = "Score: " + trs.ToString();
 	}
 }

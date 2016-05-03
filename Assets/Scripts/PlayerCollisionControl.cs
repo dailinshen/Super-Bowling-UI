@@ -10,7 +10,7 @@ public class PlayerCollisionControl : MonoBehaviour {
 	private float volLowRange=5.5f;
 	private float volHighRange=10.0f;
 
-	public int overalscore;
+	public static int overalscore;
 
 	public Text scoreText;
 	// Use this for initialization
@@ -18,6 +18,7 @@ public class PlayerCollisionControl : MonoBehaviour {
 		source = GetComponent<AudioSource> ();
 	}
 	void Start () {
+		//overalscore = 0;
 		count = 0;
 		rb = GetComponent<Rigidbody> ();
 		scoreText.text = "Score: " + count.ToString ();
@@ -25,7 +26,12 @@ public class PlayerCollisionControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		overalscore = count;
+		//overalscore = count;
+		if (!GameObject.Find ("EditorWorkspace").GetComponent<Pathmove> ().playflag) {
+			if (overalscore < count)
+				overalscore = count;
+		}
+		//Debug.Log (count);
 	}
 	void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag ("BowlingPins")) {
@@ -36,6 +42,8 @@ public class PlayerCollisionControl : MonoBehaviour {
 			source.PlayOneShot (shootSound, vol);
 
 			scoreText.text = "Score: " + count.ToString ();
+			//scoreText.text = "Score: " + overalscore.ToString ();
 		}
 	}
+		
 }
