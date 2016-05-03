@@ -54,7 +54,7 @@ public class Pathmove : MonoBehaviour {
 
 		}
 
-		if (Cam.transform.position.x>-13.6 &&Cam.transform.position.x<-13.2) {
+		if (Cam.transform.position.x>-13.6 &&Cam.transform.position.x<-13.2&&playflag==true) {
 			if (transform.localPosition.x > 0.1) {
 				player.AddRelativeForce (new Vector3 (0f, -1f, 0f));
 			}
