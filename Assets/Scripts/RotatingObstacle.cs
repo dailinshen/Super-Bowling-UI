@@ -3,9 +3,9 @@ using System.Collections;
 using System;
 using UnityEngine.UI;
 
-public class Mover : MonoBehaviour {
+public class RotatingObstacle : MonoBehaviour
+{
 
-    private GameObject guide;
     private GameObject block;
     private GameObject ui;
     private GameObject canvas;
@@ -13,19 +13,17 @@ public class Mover : MonoBehaviour {
     private Editor editor;
 
     public Slider speedSlider;
-    public Slider lengthSlider;
 
     private int dir;
 
     public float speed = 10.0f;
-    public float length = 10.0f;
 
     //private int lastSpeed = 10;
     //private int lastLength = 10;
 
-	// Use this for initialization
-	void Start () {
-        guide = transform.Find("Guide").gameObject;
+    // Use this for initialization
+    void Start()
+    {
         block = transform.Find("Block").gameObject;
         ui = transform.Find("UI").gameObject;
         canvas = GameObject.Find("Canvas");
@@ -34,56 +32,30 @@ public class Mover : MonoBehaviour {
         //ui.transform.parent = canvas.transform;
         //ui.SetActive(false);
 
-        guide.transform.localScale = new Vector3(length * 0.1f, 0.1f, 0.01f);
-        dir = -1;
-
         speedSlider.onValueChanged.AddListener(delegate
         {
             SpeedValueChanged(speedSlider);
         });
-        lengthSlider.onValueChanged.AddListener(delegate
-        {
-            RangeValueChanged(lengthSlider);
-        });
-	}
+    }
 
     private void SpeedValueChanged(Slider target)
     {
         speed = speedSlider.value;
     }
 
-    private void RangeValueChanged(Slider target)
+    // Update is called once per frame
+    void Update()
     {
-        length = lengthSlider.value;
-        guide.transform.localScale = new Vector3(length * 0.1f, 0.1f, 0.01f);
-    }
-	
-	// Update is called once per frame
-	void Update () {
 
         /*if (lastLength != length)
         {
             guide.transform.localScale = new Vector3(length * 0.1f, 0.1f, 0.01f);
             lastLength = length;
         }*/
+        Debug.Log(editor.toolMode);
         if (editor.toolMode != 6 && editor.toolMode != 7)
-        {
-            float rightSide = guide.transform.localPosition.x + Mathf.Abs(guide.transform.localScale.x / 2.0f);
-            float leftSide = guide.transform.localPosition.x - Mathf.Abs(guide.transform.localScale.x / 2.0f);
-            //Debug.Log("x is " + block.transform.localPosition.x);
-            //Debug.Log("right is " + rightSide);
-            //Debug.Log("left is " + leftSide);
-            if (block.transform.localPosition.x >= rightSide)
-            {
-                dir = -1;
-            }
-            else if (block.transform.localPosition.x <= leftSide)
-            {
-                dir = 1;
-            }
-            block.transform.Translate(new Vector3(dir * speed * 0.0005f, 0.0f, 0.0f));
-        }
-	}
+            block.transform.Rotate(new Vector3(speed * 0.2f, 0.0f, 0.0f));
+    }
 
     public void showUI()
     {
