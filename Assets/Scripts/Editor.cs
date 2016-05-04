@@ -44,6 +44,8 @@ public class Editor : MonoBehaviour {
     public GameObject confirmMenu;
     public GameObject transformMenu;
 
+    public GameObject playButton;
+
     public GameObject createObjectChooser;
 
     public Material sMat;
@@ -125,6 +127,15 @@ public class Editor : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (toolMode == 0 && playButton.activeSelf == false)
+        {
+            playButton.SetActive(true);
+        }
+        else if (toolMode != 0 && playButton.activeSelf == true)
+        {
+            playButton.SetActive(false);
+        }
 
         //Vector3 camToImageDir = mainImage.transform.position + ARCam.transform.position;
         //camToImageDir.x += 26.8f;
