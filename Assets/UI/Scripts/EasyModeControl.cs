@@ -7,23 +7,26 @@ public class EasyModeControl : MonoBehaviour {
 
 	public Canvas EditorWindow;
 	public bool backtogame;
-
+	public Canvas CongratsWindow;
 	public bool exitpressed;
 	private GUIStyle guistyle=new GUIStyle();
 	private Text counterText;
 	private float seconds, minutes;
 	public GameObject Player;
 	public Vector3 StartPosition;
+
     public float frames = 0;
     public GameObject editorWorkspace;
     private Quaternion StartRotation;
 
 	public void Backtogame(){
-		EditorWindow.enabled = false;
+		//EditorWindow.enabled = false;
 		backtogame = true;
         exitpressed = false;
 	}
-
+	public void Congrats(){
+		CongratsWindow.enabled = true;
+	} 
 	public void Exit(){
 		ExitWindow.enabled = true;
 		exitpressed = true;
@@ -45,7 +48,6 @@ public class EasyModeControl : MonoBehaviour {
         ExitWindow.enabled = false;
         exitpressed = false;
 	}
-
 	public void ExitAnyWay(){
 		Application.LoadLevel(0);
 	}
@@ -60,6 +62,8 @@ public class EasyModeControl : MonoBehaviour {
 
         editorWorkspace = GameObject.Find("EditorWorkspace");
 
+		CongratsWindow = CongratsWindow.GetComponent<Canvas> ();
+		CongratsWindow.enabled = false;
 		EditorWindow.enabled = true;
 		backtogame = false;
 
@@ -73,7 +77,8 @@ public class EasyModeControl : MonoBehaviour {
 	void OnGUI(){
         frames += Time.deltaTime;
         minutes = Mathf.Floor(frames / 60);//(int)(Time.timeSinceLevelLoad / 60f);
-        seconds = Mathf.RoundToInt(frames % 60);//(int)(Time.timeSinceLevelLoad % 60f);
+        seconds = Mathf.RoundToInt(frames % 60);//(int)
+
 		guistyle.fontSize = 50;
 
 		guistyle.normal.textColor = Color.green;
@@ -84,25 +89,15 @@ public class EasyModeControl : MonoBehaviour {
 	void Update () {
 		bool flag;
 		flag = GameObject.Find ("EditorWorkspace").GetComponent<Pathmove> ().playflag;
-        /*Debug.Log(exitpressed);
-        Debug.Log(!flag);
-        Debug.Log(!backtogame);*/
 		if (exitpressed)
-        {
-            //Debug.Log("!");
 			Time.timeScale = 0;
-        }
 		else if (!flag)
-        {
-            //Debug.Log("!!");
 			Time.timeScale = 0;
-        }
-        else if (!backtogame)
-        {
-            //Debug.Log("!!!");
-            Time.timeScale = 0;
-        }
-        else
-            Time.timeScale = 1;
+		else if (!backtogame)
+			Time.timeScale = 0;
+		else
+			Time.timeScale= 1;
+		if (GameObject.Find ("Player").GetComponent<PlayerCollisionControl> ().count == 100)
+			Time.timeScale = 0;
 	}
 }

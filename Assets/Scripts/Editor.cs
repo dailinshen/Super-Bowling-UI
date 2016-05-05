@@ -5,7 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Reflection;
 
-public class Editor : MonoBehaviour {
+public class Editor : MonoBehaviour
+{
 
     private RaycastHit hit;
 
@@ -63,8 +64,9 @@ public class Editor : MonoBehaviour {
     private GameObject scalyObject;
     private Color originalColor;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
 
         title.text = "Editor Menu";
         editorMenu.SetActive(true);
@@ -134,10 +136,11 @@ public class Editor : MonoBehaviour {
             backToEditPressed();
         });
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
         if (toolMode == 0 && playButton.activeSelf == false)
         {
@@ -199,7 +202,7 @@ public class Editor : MonoBehaviour {
                 /*if (obj.transform.Find("Group") != null)
                     obj.transform.Find("Group").position = ARCam.transform.position + ARCam.transform.forward * 1.3f;
                 else*/
-                obj.transform.position = ARCam.transform.position + ARCam.transform.forward*1.3f;
+                obj.transform.position = ARCam.transform.position + ARCam.transform.forward * 1.3f;
 
                 objectNumber++;
                 //Debug.Log(obj);
@@ -258,13 +261,13 @@ public class Editor : MonoBehaviour {
 
                 relWandPos = selectedObject.transform.InverseTransformPoint(wandEnd.transform.position);
                 //Debug.Log(relWandPos);
-                
+
                 scalyObject.transform.localScale = new Vector3(Mathf.Abs(relWandPos.x) * 0.2f, Mathf.Abs(relWandPos.y) * 0.2f, Mathf.Abs(relWandPos.z) * 0.2f);
             }
 
         }
-	
-	}
+
+    }
 
     public static GameObject FindParentWithName(GameObject childObject, string name)
     {
@@ -303,7 +306,7 @@ public class Editor : MonoBehaviour {
 
     bool touchedAnObject()
     {
-        return (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !IsPointerOverGameObject(Input.GetTouch(0).fingerId)) 
+        return (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             || (Input.mousePresent && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject());
     }
 
@@ -386,7 +389,7 @@ public class Editor : MonoBehaviour {
     public void backPressed(Button b)
     {
         if (toolMode == 1) // select
-        { 
+        {
             deSelect();
             toolMode = 0;
             editorMenu.SetActive(true);
@@ -517,6 +520,7 @@ public class Editor : MonoBehaviour {
         title.text = "Testing";
 
         phoneCam.GetComponent<EasyModeControl>().backtogame = true;
+        phoneCam.GetComponent<EasyModeControl>().exitpressed = false;
     }
 
     public void backToEditPressed()

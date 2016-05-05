@@ -10,8 +10,6 @@ public class Mover : MonoBehaviour {
     private GameObject ui;
     private GameObject canvas;
 
-    private Editor editor;
-
     public Slider speedSlider;
     public Slider lengthSlider;
 
@@ -29,10 +27,8 @@ public class Mover : MonoBehaviour {
         block = transform.Find("Block").gameObject;
         ui = transform.Find("UI").gameObject;
         canvas = GameObject.Find("Canvas");
-        editor = canvas.transform.Find("EditorMenu").transform.Find("EditorMenus").GetComponent<Editor>();
 
-        //ui.transform.parent = canvas.transform;
-        //ui.SetActive(false);
+        
 
         guide.transform.localScale = new Vector3(length * 0.1f, 0.1f, 0.01f);
         dir = -1;
@@ -66,23 +62,21 @@ public class Mover : MonoBehaviour {
             guide.transform.localScale = new Vector3(length * 0.1f, 0.1f, 0.01f);
             lastLength = length;
         }*/
-        if (editor.toolMode != 6 && editor.toolMode != 7)
+
+        float rightSide = guide.transform.localPosition.x + Mathf.Abs(guide.transform.localScale.x / 2.0f);
+        float leftSide = guide.transform.localPosition.x - Mathf.Abs(guide.transform.localScale.x / 2.0f);
+        //Debug.Log("x is " + block.transform.localPosition.x);
+        //Debug.Log("right is " + rightSide);
+        //Debug.Log("left is " + leftSide);
+        if (block.transform.localPosition.x >= rightSide)
         {
-            float rightSide = guide.transform.localPosition.x + Mathf.Abs(guide.transform.localScale.x / 2.0f);
-            float leftSide = guide.transform.localPosition.x - Mathf.Abs(guide.transform.localScale.x / 2.0f);
-            //Debug.Log("x is " + block.transform.localPosition.x);
-            //Debug.Log("right is " + rightSide);
-            //Debug.Log("left is " + leftSide);
-            if (block.transform.localPosition.x >= rightSide)
-            {
-                dir = -1;
-            }
-            else if (block.transform.localPosition.x <= leftSide)
-            {
-                dir = 1;
-            }
-            block.transform.Translate(new Vector3(dir * speed * 0.0005f, 0.0f, 0.0f));
+            dir = -1;
         }
+        else if (block.transform.localPosition.x <= leftSide)
+        {
+            dir = 1;
+        }
+        block.transform.Translate(new Vector3(dir*speed*0.0005f, 0.0f, 0.0f));
 	}
 
     public void showUI()
