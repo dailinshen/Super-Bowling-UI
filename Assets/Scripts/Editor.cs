@@ -15,6 +15,7 @@ public class Editor : MonoBehaviour {
     public GameObject ARCam;
     public GameObject mainWorkspace;
     public GameObject mainImage;
+    public GameObject phoneCam;
 
     public Button selectButton;
     public Button createButton;
@@ -45,6 +46,7 @@ public class Editor : MonoBehaviour {
     public GameObject transformMenu;
 
     public GameObject playButton;
+    public GameObject backToEditButton;
 
     public GameObject createObjectChooser;
 
@@ -72,6 +74,7 @@ public class Editor : MonoBehaviour {
         createMenu.SetActive(false);
         createObjectChooser.SetActive(false);
         transformMenu.SetActive(false);
+        backToEditButton.SetActive(false);
 
         selectButton.onClick.AddListener(delegate
         {
@@ -122,6 +125,14 @@ public class Editor : MonoBehaviour {
         {
             optionsPressed(optionsButton);
         });
+        playButton.GetComponent<Button>().onClick.AddListener(delegate
+        {
+            playPressed();
+        });
+        backToEditButton.GetComponent<Button>().onClick.AddListener(delegate
+        {
+            backToEditPressed();
+        });
 
 	}
 	
@@ -161,10 +172,10 @@ public class Editor : MonoBehaviour {
             else
                 ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit))
+            /*if (Physics.Raycast(ray, out hit))
             {
                 Debug.Log(hit.transform.name);
-            }
+            }*/
             if (Physics.Raycast(ray, out hit) && FindParentWithTag(hit.transform.gameObject, "Obstacle", "HasUI") != null
                 && FindParentWithName(hit.transform.gameObject, "EditorWorkspace") != null && toolMode == 1)
             {
@@ -191,7 +202,7 @@ public class Editor : MonoBehaviour {
                 obj.transform.position = ARCam.transform.position + ARCam.transform.forward*1.3f;
 
                 objectNumber++;
-                Debug.Log(obj);
+                //Debug.Log(obj);
                 objects.Add(obj);
 
                 backPressed(createBackButton);
@@ -246,7 +257,7 @@ public class Editor : MonoBehaviour {
                 }*/
 
                 relWandPos = selectedObject.transform.InverseTransformPoint(wandEnd.transform.position);
-                Debug.Log(relWandPos);
+                //Debug.Log(relWandPos);
                 
                 scalyObject.transform.localScale = new Vector3(Mathf.Abs(relWandPos.x) * 0.2f, Mathf.Abs(relWandPos.y) * 0.2f, Mathf.Abs(relWandPos.z) * 0.2f);
             }
@@ -338,7 +349,7 @@ public class Editor : MonoBehaviour {
         {
             if (child.GetComponent<Renderer>() != null)
             {
-                Debug.Log(m[i]);
+                //Debug.Log(m[i]);
                 child.GetComponent<Renderer>().material = m[i];
                 i = i + 1;
             }
@@ -493,6 +504,33 @@ public class Editor : MonoBehaviour {
 
             selectedObject.SendMessage("hideUI");
         }
+    }
+
+    public void playPressed()
+    {
+        toolMode = -1;
+        backToEditButton.SetActive(true);
+        editorMenu.SetActive(false);
+        //confirmMenu.SetActive(false);
+        backButton.gameObject.SetActive(false);
+        confirmButton.gameObject.SetActive(false);
+        title.text = "Testing";
+
+        phoneCam.GetComponent<EasyModeControl>().backtogame = true;
+    }
+
+    public void backToEditPressed()
+    {
+        toolMode = 0;
+        backToEditButton.SetActive(false);
+        editorMenu.SetActive(true);
+        //confirmMenu.SetActive(false);
+        backButton.gameObject.SetActive(false);
+        confirmButton.gameObject.SetActive(false);
+        title.text = "Editor Menu";
+
+        phoneCam.GetComponent<EasyModeControl>().Restart();
+        phoneCam.GetComponent<EasyModeControl>().backtogame = false;
     }
 
     public void selectPressed(Button b)

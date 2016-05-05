@@ -22,6 +22,11 @@ public class PlayerCollisionControl : MonoBehaviour {
 	void Awake(){
 		source = GetComponent<AudioSource> ();
 	}
+
+    public void SetCount(int c)
+    {
+        count = c;
+    }
 	void Start () {
 		//overalscore = 0;
 		count = 0;
